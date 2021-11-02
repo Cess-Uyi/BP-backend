@@ -36,13 +36,20 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/", function (req, res) {
-  res.send("hello world");
-});
+// app.get("/", function (req, res) {
+//   res.send("hello world");
+// });
 
 app.use("/v1/user", userRoutes);
 app.use("/v1/vendor", vendorRoutes);
 app.use("/v1/admin", adminRoutes);
+
+app.get("/", (req, res, next) => {
+  return res.status(200).json({
+    status: 200,
+    message: "welcome",
+  });
+});
 
 app.use("*", (req, res, next) => {
   const error = new Error("Route not found");
