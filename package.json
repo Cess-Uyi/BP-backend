@@ -7,9 +7,8 @@
   "description": "This is a beauty parlour that links clients with different vendors offering beauty services.\r There are three different categories of people who use this website;\r >Admin",
   "main": "index.js",
   "scripts": {
-    "compile:sass": "node-sass UI/sass/main.scss UI/css/main.css -w",
     "live": "live-server",
-    "start": "npm-run-all --parallel compile:sass live",
+    "start": "npm-run-all --parallel live",
     "api": "node server/server.js",
     "dev": "nodemon server/server.js"
   },
