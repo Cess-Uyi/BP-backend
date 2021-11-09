@@ -110,7 +110,6 @@ exports.vendors_upload_photos = (req, res, next) => {
 
 exports.vendors_get_pending = (req, res, next) => {
   Appointment.find({ vendorId: req.userData.id, status: "pending" })
-    // .populate('userId', '-vendor -password -createdAt -updatedAt -__v')
     .then((docs) => {
       const result = {
         count: docs.length,
