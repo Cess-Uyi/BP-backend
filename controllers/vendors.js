@@ -76,26 +76,36 @@ exports.vendors_get_all = (req, res, next) => {
 
 exports.vendors_upload_photos = (req, res, next) => {
   console.log(req.files);
-  User.findById(req.userData.id).then((user) => {
-    if (!user) {
-      return res.status(400).json({
-        message: "invalid auth",
+  User.findById(req.userData.id)
+    .then((user) => {
+      if (!user) {
+        return res.status(400).json({
+          message: "invalid auth",
+        });
+      }
+      if (req.files.length <= 0) {
+        return res.status(400).json({
+          message: "please select files to upload",
+        });
+      }
+      for (let i = 0; i < req.files.length; i++) {
+        const file = req.files[i];
+        user.vendor.photos.push({
+          filePath: file.path,
+          mimeType: file.mimetype,
+        });
+      }
+      return user.save().then((result) => {
+        res.status(200).json({
+          message: "photos uploaded successfully",
+          result,
+        });
       });
-    }
-    for (let i = 0; i < req.files.length; i++) {
-      const file = req.files[i];
-      user.vendor.photos.push({
-        filePath: file.path,
-        mimeType: file.mimetype,
-      });
-    }
-    return user.save().then((result) => {
-      res.status(200).json({
-        message: "photos uploaded successfully",
-        result,
-      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ error: err });
     });
-  });
 };
 
 exports.vendors_get_pending = (req, res, next) => {
