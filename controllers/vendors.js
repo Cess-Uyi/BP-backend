@@ -182,6 +182,3 @@ exports.vendors_edit_shop = (req, res, next) => {
       res.status(500).json({ error: err });
     });
 };
-
-//////////////////
-///KAJSN
